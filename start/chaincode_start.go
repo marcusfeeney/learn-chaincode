@@ -65,8 +65,8 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
 		return t.Init(stub, "init", args)
-	} else if function =="write" {
-		return t.Write(stub, args);
+	} else if function == "write" {
+		return t.write(stub, args);
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
 
@@ -81,14 +81,14 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 
 	// Handle different functions
 	if function == "read" {											//read a variable
-		return t.Read(stub, args)
+		return t.read(stub, args)
 	}
 	fmt.Println("query did not find func: " + function)						//error
 
 	return nil, errors.New("Received unknown function query")
 }
 
-func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var name, jsonResponse string
 	var err error
 
@@ -106,7 +106,7 @@ func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte,
 	return valAsBytes, nil
 }
 
-func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var name, value string
 	var err error
 	fmt.Println("running write()")
